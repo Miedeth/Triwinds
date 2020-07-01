@@ -1,0 +1,18 @@
+﻿@model Triwinds.Engine.Models.Battle
+
+@foreach (Triwinds.Engine.Models.Combatant combatant in Model.Combatants)
+{
+    string folder = combatant.PlayerControlled ? "Characters" : "Foes";
+    string imageLocation = string.Format("/Images/{0}/{1}.png", folder, combatant.Image);
+    <div class="d-inline float-left">
+        <div>
+            <img src="@imageLocation" />
+        </div>
+        <div class="font-weight-bold">
+            @combatant.Name
+        </div>
+        <div>
+            HP @combatant.HitPoints/@combatant.MaxHitPoints
+        </div>
+    </div>
+}

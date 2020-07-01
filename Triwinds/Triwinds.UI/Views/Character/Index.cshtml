@@ -1,0 +1,19 @@
+﻿@model List<Character>
+
+<h4>Characters</h4>
+
+@foreach (Character character in Model)
+{
+    string imageLocation = string.Format("/Images/Characters/{0}.png", character.Image);
+    <div>
+        <div class="d-inline">
+            <img src="@imageLocation" />
+        </div>
+        <div class="d-inline font-weight-bold">
+            @character.Name
+        </div>
+        <div class="d-inline">
+            @Html.ActionLink("Quick Battle", "CreateBattle", "Combat", "" ,new { @class = "btn btn-primary" })
+        </div>
+    </div>
+}

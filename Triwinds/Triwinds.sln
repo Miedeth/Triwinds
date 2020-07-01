@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triwinds", "Triwinds\Triwinds.csproj", "{E0E3EBF2-DFCF-40A4-8605-B09856C7EDD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Triwinds.UI", "Triwinds.UI\Triwinds.UI.csproj", "{BB7C2825-45BA-4FAA-A514-F7C04366FDC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triwinds.Tests", "Triwinds.Tests\Triwinds.Tests.csproj", "{2F4D98F7-2F0E-45F2-9D89-0DC4C49C731F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triwinds.Engine", "Triwinds.Engine\Triwinds.Engine.csproj", "{9EC243FB-9EAA-4ED3-93AD-622CE4FEB485}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triwinds.Models", "Triwinds.Models\Triwinds.Models.csproj", "{B3CA4CF1-9CA6-47F2-BF23-54465D908646}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triwinds.Engine", "Triwinds.Engine\Triwinds.Engine.csproj", "{F9F23DBA-1191-46B9-9D03-B1950D522656}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,24 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E0E3EBF2-DFCF-40A4-8605-B09856C7EDD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0E3EBF2-DFCF-40A4-8605-B09856C7EDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0E3EBF2-DFCF-40A4-8605-B09856C7EDD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0E3EBF2-DFCF-40A4-8605-B09856C7EDD4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2F4D98F7-2F0E-45F2-9D89-0DC4C49C731F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F4D98F7-2F0E-45F2-9D89-0DC4C49C731F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F4D98F7-2F0E-45F2-9D89-0DC4C49C731F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F4D98F7-2F0E-45F2-9D89-0DC4C49C731F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9EC243FB-9EAA-4ED3-93AD-622CE4FEB485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9EC243FB-9EAA-4ED3-93AD-622CE4FEB485}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9EC243FB-9EAA-4ED3-93AD-622CE4FEB485}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9EC243FB-9EAA-4ED3-93AD-622CE4FEB485}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3CA4CF1-9CA6-47F2-BF23-54465D908646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3CA4CF1-9CA6-47F2-BF23-54465D908646}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3CA4CF1-9CA6-47F2-BF23-54465D908646}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3CA4CF1-9CA6-47F2-BF23-54465D908646}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB7C2825-45BA-4FAA-A514-F7C04366FDC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7C2825-45BA-4FAA-A514-F7C04366FDC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7C2825-45BA-4FAA-A514-F7C04366FDC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7C2825-45BA-4FAA-A514-F7C04366FDC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9F23DBA-1191-46B9-9D03-B1950D522656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9F23DBA-1191-46B9-9D03-B1950D522656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9F23DBA-1191-46B9-9D03-B1950D522656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9F23DBA-1191-46B9-9D03-B1950D522656}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {79E14B02-7B08-4F44-BCA6-6AFED68A7530}
 	EndGlobalSection
 EndGlobal
