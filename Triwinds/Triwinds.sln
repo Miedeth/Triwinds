@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Triwinds.UI", "Triwinds.UI\Triwinds.UI.csproj", "{BB7C2825-45BA-4FAA-A514-F7C04366FDC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triwinds.Engine", "Triwinds.Engine\Triwinds.Engine.csproj", "{F9F23DBA-1191-46B9-9D03-B1950D522656}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Triwinds.Engine", "Triwinds.Engine\Triwinds.Engine.csproj", "{F9F23DBA-1191-46B9-9D03-B1950D522656}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triwinds.Data", "Triwinds.Data\Triwinds.Data.csproj", "{EE122915-9583-40CA-ABD2-0249838A54A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triwinds.Models", "Triwinds.Models\Triwinds.Models.csproj", "{2A20040B-EA63-44C9-B0EA-FEF22F1B0BF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{F9F23DBA-1191-46B9-9D03-B1950D522656}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9F23DBA-1191-46B9-9D03-B1950D522656}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9F23DBA-1191-46B9-9D03-B1950D522656}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE122915-9583-40CA-ABD2-0249838A54A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE122915-9583-40CA-ABD2-0249838A54A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE122915-9583-40CA-ABD2-0249838A54A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE122915-9583-40CA-ABD2-0249838A54A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A20040B-EA63-44C9-B0EA-FEF22F1B0BF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A20040B-EA63-44C9-B0EA-FEF22F1B0BF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A20040B-EA63-44C9-B0EA-FEF22F1B0BF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A20040B-EA63-44C9-B0EA-FEF22F1B0BF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

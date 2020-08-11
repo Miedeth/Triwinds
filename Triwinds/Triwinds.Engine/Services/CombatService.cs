@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Triwinds.Engine.Models;
+using Triwinds.Data.Interfaces;
+using Triwinds.Engine.Interfaces;
+using Triwinds.Models.Combat;
 
 namespace Triwinds.Engine.Services
 {
-    public class CombatService
+    public class CombatService : ICombatService
     {
+        private IBattleRepository _battleRepository;
+
+        public CombatService(IBattleRepository battleRepository)
+        {
+            _battleRepository = battleRepository;
+        }
+
         public Battle CreateQuickBattle(Combatant playerCharacter)
         {
             Combatant monster = new Combatant
@@ -23,7 +31,31 @@ namespace Triwinds.Engine.Services
             combatants.Add(monster);
 
             Battle battle = new Battle(combatants);
+            _battleRepository.SaveBattle(battle);
+
             return battle;
+        }
+
+        public Battle GetBattle(Guid battleId)
+        {
+            Battle battle = _battleRepository.GetBattle(battleId);
+            return battle;
+        }
+
+        public Turn ProcessTurn(Guid battleId)
+        {
+            Battle battle = GetBattle(battleId);
+            Combatant currentCombatantTurn = battle.Combatants.Peek();
+
+            battle.BattleState = currentCombatantTurn.PlayerControlled ? BattleState.PlayerTurn : BattleState.AiTurn;
+
+            Turn turn = new Turn()
+            {
+                BattleState = battle.BattleState,
+                CurrentCombatant = currentCombatantTurn
+            };
+
+            return turn;
         }
     }
 }

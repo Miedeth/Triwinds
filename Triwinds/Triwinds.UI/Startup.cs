@@ -14,6 +14,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Triwinds.UI.Services;
+using Triwinds.Data.Interfaces;
+using Triwinds.Data.Repositories;
+using Triwinds.Engine.Interfaces;
+using Triwinds.Engine.Services;
 
 namespace Triwinds.UI
 {
@@ -47,6 +51,10 @@ namespace Triwinds.UI
                 microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
                 microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
             });
+
+            // Switch to scoped when it's using the actual database
+            services.AddSingleton<IBattleRepository, InMemoryBattleRepository>();
+            services.AddScoped<ICombatService, CombatService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,18 +1,123 @@
-﻿@model Triwinds.Engine.Models.Battle
+﻿@model Triwinds.Models.Combat.Battle
 
-@foreach (Triwinds.Engine.Models.Combatant combatant in Model.Combatants)
-{
-    string folder = combatant.PlayerControlled ? "Characters" : "Foes";
-    string imageLocation = string.Format("/Images/{0}/{1}.png", folder, combatant.Image);
-    <div class="d-inline float-left">
-        <div>
-            <img src="@imageLocation" />
+<div class="topboard">
+    @foreach (Triwinds.Models.Combat.Combatant combatant in Model.Combatants)
+    {
+        string folder = combatant.PlayerControlled ? "Characters" : "Foes";
+        string imageLocation = string.Format("/Images/{0}/{1}.png", folder, combatant.Image);
+        string currentHpId = string.Format("{0}HP", combatant.Id);
+        <div class="combatantsummary">
+            <div>
+                <img src="@imageLocation" class="topboardimage" />
+            </div>
+            <div class="font-weight-bold">
+                @combatant.Name
+            </div>
+            <div>
+                HP <span id="@currentHpId">@combatant.HitPoints</span>/@combatant.MaxHitPoints
+            </div>
         </div>
-        <div class="font-weight-bold">
-            @combatant.Name
-        </div>
-        <div>
-            HP @combatant.HitPoints/@combatant.MaxHitPoints
+    }
+</div>
+<br />
+
+<div class="board">
+    @for (int row = 0; row < Model.Rows; row++)
+    {
+        @for (int column = 0; column < Model.Columns; column++)
+        {
+            string id = string.Format("r{0}c{1}", row, column);
+            <div id="@id" class="battlesquare">
+                @{
+                    Triwinds.Models.Combat.Combatant combatant = Model.Combatants.FirstOrDefault(c => c.Location.Column == column && c.Location.Row == row);
+                    if (combatant != null)
+                    {
+                        string folder = combatant.PlayerControlled ? "Characters" : "Foes";
+                        string imageLocation = string.Format("/Images/{0}/{1}.png", folder, combatant.Image);
+                        <img src="@imageLocation" class="combatantimage" />
+                    }
+                }
+            </div>
+        }
+    }
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="readyModal" tabindex="-1" role="dialog" aria-labelledby="loadingModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                Battle Ready
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ProcessNextTurn()">Fight</button>
+            </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="combatMenu" tabindex="-1" role="dialog" aria-labelledby="combatMenuModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ShowMoveableSquares()">Move</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input id="CurrentCombatant" type="hidden" value="" />
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $('#readyModal').modal('show');
+        });
+
+        function ProcessNextTurn() {
+            var id = '@Model.Id';
+
+            $.getJSON("/Combat/ProcessTurn", { battleId: id }, function (data) {
+                $("#CurrentCombatant").val(JSON.stringify(data.currentCombatant));
+
+                if (data.battleState == 0) { // Players turn
+                    $('#combatMenu').modal('show');
+                }
+            });
+        }
+
+        function ShowMoveableSquares() {
+            var currentCombatant = JSON.parse($("#CurrentCombatant").val());
+
+            $.each(currentCombatant.movableLocationIds, function (id) {
+                console.log(currentCombatant.movableLocationIds[id]);
+
+                var squareId = currentCombatant.movableLocationIds[id];
+                $('#' + squareId).addClass("moveable");
+                $('#' + squareId).click(function () { MovePlayer(squareId); });
+            });
+        }
+
+        function MovePlayer(squareId) {
+            // Check to see if move is valid
+            
+
+            // Remove movable class and click events
+            var currentCombatant = JSON.parse($("#CurrentCombatant").val());
+
+            $.each(currentCombatant.movableLocationIds, function (id) {
+                console.log(currentCombatant.movableLocationIds[id]);
+
+                var squareId = currentCombatant.movableLocationIds[id];
+                $('#' + squareId).removeClass("moveable");
+                $('#' + squareId).prop("onclick", null).off("click");
+            });
+
+            // Perform move
+            
+        }
+
+    </script>
 }

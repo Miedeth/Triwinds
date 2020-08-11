@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Triwinds.Engine.Models
+﻿namespace Triwinds.Models.Combat
 {
     public class Location
     {
