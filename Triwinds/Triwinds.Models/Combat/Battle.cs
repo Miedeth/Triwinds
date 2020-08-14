@@ -19,7 +19,7 @@ namespace Triwinds.Models.Combat
         {
             get
             {
-                List<Location> occupiedLocations = Combatants.Select(x => x.Location).ToList();
+                List<Location> occupiedLocations = Combatants.Select(x => x.CurrentLocation).ToList();
                 return occupiedLocations;
             }
         }
@@ -35,9 +35,10 @@ namespace Triwinds.Models.Combat
             foreach (Combatant combatant in combatants)
             {
                 combatant.Id = Guid.NewGuid();
-                combatant.Location = new Location();
-                combatant.Location.Column = combatant.PlayerControlled ? 0 : 7;
-                combatant.Location.Row = rng.Next(8);
+                combatant.TurnStartLocation = new Location();
+                combatant.TurnStartLocation.Column = combatant.PlayerControlled ? 0 : 7;
+                combatant.TurnStartLocation.Row = rng.Next(8);
+                combatant.CurrentLocation = combatant.TurnStartLocation;
                 combatant.Moves = 3;
                 GetMovableLocations(combatant);
 
@@ -51,10 +52,10 @@ namespace Triwinds.Models.Combat
             combatant.MovableLocations = new List<Location>();
 
             // Compute the min and max row/columns they can move to
-            int startingRow = combatant.Location.Row - combatant.Moves;
-            int startingColumn = combatant.Location.Column - combatant.Moves;
-            int endingRow = combatant.Location.Row + combatant.Moves + 1;
-            int endingColumn = combatant.Location.Column + combatant.Moves;
+            int startingRow = combatant.TurnStartLocation.Row - combatant.Moves;
+            int startingColumn = combatant.TurnStartLocation.Column - combatant.Moves;
+            int endingRow = combatant.TurnStartLocation.Row + combatant.Moves;
+            int endingColumn = combatant.TurnStartLocation.Column + combatant.Moves;
 
             if (startingRow < 0)
             {
@@ -77,7 +78,7 @@ namespace Triwinds.Models.Combat
             }
 
             // Make a list of all those that aren't occupied
-            for (int row = startingRow; row <+ endingRow; row++)
+            for (int row = startingRow; row <= endingRow; row++)
             {
                 for (int column = startingColumn; column <= endingColumn; column++)
                 {
@@ -90,7 +91,7 @@ namespace Triwinds.Models.Combat
             }
 
             // Add the combatants current location to the list of places they can move
-            combatant.MovableLocations.Add(combatant.Location);
+            combatant.MovableLocations.Add(combatant.CurrentLocation);
         }
     }
 }

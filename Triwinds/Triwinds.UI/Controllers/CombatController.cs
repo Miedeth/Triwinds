@@ -38,5 +38,24 @@ namespace Triwinds.UI.Controllers
 
             return Json(turn);
         }
+
+        [HttpPost]
+        public JsonResult MovePlayer(Guid battleId, Guid playerId, string squareId)
+        {
+            // Get the row and colum from the r#c# format
+            string[] ids = squareId.Replace("r", string.Empty).Split("c");
+
+            int row, column;
+            bool rowIsInt = int.TryParse(ids[0], out row);
+            bool columnIsInt = int.TryParse(ids[1], out column);
+
+            if (rowIsInt && columnIsInt)
+            {
+                bool validMove = _combatService.MovePlayer(battleId, playerId, row, column);
+                return Json(validMove);
+            }
+
+            return Json(false);
+        }
     }
 }

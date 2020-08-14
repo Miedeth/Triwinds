@@ -9,7 +9,9 @@ namespace Triwinds.Models.Combat
         public string Name { get; set; }
         public string Image { get; set; }
         public bool PlayerControlled { get; set; }
-        public Location Location { get; set; }
+        public Location CurrentLocation { get; set; }
+
+        public Location TurnStartLocation { get; set; }
 
         public int MaxHitPoints { get; set; }
         public int HitPoints { get; set; }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Triwinds.Data.Interfaces;
 using Triwinds.Engine.Interfaces;
 using Triwinds.Models.Combat;
@@ -56,6 +58,25 @@ namespace Triwinds.Engine.Services
             };
 
             return turn;
+        }
+
+        public bool MovePlayer(Guid battleId, Guid playerId, int row, int column)
+        {
+            Battle battle = GetBattle(battleId);
+            Combatant combatant = battle.Combatants.FirstOrDefault(c => c.Id == playerId);
+
+            if (combatant == null)
+            {
+                return false;
+            }
+
+            bool validMove = combatant.MovableLocations.Any(l => l.Row == row && l.Column == column);
+            if (validMove)
+            {
+                combatant.CurrentLocation = new Location() { Row = row, Column = column };
+            }
+
+            return validMove;
         }
     }
 }

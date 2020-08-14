@@ -29,12 +29,12 @@
             string id = string.Format("r{0}c{1}", row, column);
             <div id="@id" class="battlesquare">
                 @{
-                    Triwinds.Models.Combat.Combatant combatant = Model.Combatants.FirstOrDefault(c => c.Location.Column == column && c.Location.Row == row);
+                    Triwinds.Models.Combat.Combatant combatant = Model.Combatants.FirstOrDefault(c => c.CurrentLocation.Column == column && c.CurrentLocation.Row == row);
                     if (combatant != null)
                     {
                         string folder = combatant.PlayerControlled ? "Characters" : "Foes";
                         string imageLocation = string.Format("/Images/{0}/{1}.png", folder, combatant.Image);
-                        <img src="@imageLocation" class="combatantimage" />
+                        <img id="@combatant.Id" src="@imageLocation" class="combatantimage" />
                     }
                 }
             </div>
@@ -66,58 +66,10 @@
     </div>
 </div>
 
+<input id="CombatId" type="hidden" value="@Model.Id" />
 <input id="CurrentCombatant" type="hidden" value="" />
 
 @section Scripts
 {
-    <script type="text/javascript">
-
-        $(function () {
-            $('#readyModal').modal('show');
-        });
-
-        function ProcessNextTurn() {
-            var id = '@Model.Id';
-
-            $.getJSON("/Combat/ProcessTurn", { battleId: id }, function (data) {
-                $("#CurrentCombatant").val(JSON.stringify(data.currentCombatant));
-
-                if (data.battleState == 0) { // Players turn
-                    $('#combatMenu').modal('show');
-                }
-            });
-        }
-
-        function ShowMoveableSquares() {
-            var currentCombatant = JSON.parse($("#CurrentCombatant").val());
-
-            $.each(currentCombatant.movableLocationIds, function (id) {
-                console.log(currentCombatant.movableLocationIds[id]);
-
-                var squareId = currentCombatant.movableLocationIds[id];
-                $('#' + squareId).addClass("moveable");
-                $('#' + squareId).click(function () { MovePlayer(squareId); });
-            });
-        }
-
-        function MovePlayer(squareId) {
-            // Check to see if move is valid
-            
-
-            // Remove movable class and click events
-            var currentCombatant = JSON.parse($("#CurrentCombatant").val());
-
-            $.each(currentCombatant.movableLocationIds, function (id) {
-                console.log(currentCombatant.movableLocationIds[id]);
-
-                var squareId = currentCombatant.movableLocationIds[id];
-                $('#' + squareId).removeClass("moveable");
-                $('#' + squareId).prop("onclick", null).off("click");
-            });
-
-            // Perform move
-            
-        }
-
-    </script>
+    <script src="~/js/CombatEngine.js"></script>
 }
