@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Triwinds.Models.Combat;
+using System;
+using System.Collections.Generic;
 using Triwinds.Engine.Interfaces;
+using Triwinds.Models.Combat;
 
 namespace Triwinds.UI.Controllers
 {
@@ -51,11 +52,32 @@ namespace Triwinds.UI.Controllers
 
             if (rowIsInt && columnIsInt)
             {
-                bool validMove = _combatService.MovePlayer(battleId, playerId, row, column);
+                bool validMove = _combatService.MoveCombatant(battleId, playerId, row, column);
                 return Json(validMove);
             }
 
             return Json(false);
+        }
+
+        [HttpPost]
+        public JsonResult EndPlayerTurn(Guid battleId, Guid playerId)
+        {
+            bool success = _combatService.EndCombatantTurn(battleId, playerId);
+            return Json(success);
+        }
+
+        [HttpGet]
+        public JsonResult GetAttackableTargets(Guid battleId, Guid playerId)
+        {
+            List<Guid> attackableTargets = _combatService.GetAttackableTargets(battleId, playerId);
+            return Json(attackableTargets);
+        }
+
+        [HttpPost]
+        public JsonResult AttackCombatant(Guid battleId, Guid attackerId, Guid defenderId)
+        {
+            AttackResult attackResult = _combatService.AttackCombatant(battleId, attackerId, defenderId);
+            return Json(attackResult);
         }
     }
 }

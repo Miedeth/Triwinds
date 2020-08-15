@@ -41,3 +41,15 @@
 .moveable {
     background-color: #329da8;
 }
+
+.damageTextDisplay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+}
+
+.combatMenuItem {
+    margin : 5 px;
+}

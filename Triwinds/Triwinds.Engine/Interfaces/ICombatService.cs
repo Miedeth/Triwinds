@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Triwinds.Models.Combat;
 
 namespace Triwinds.Engine.Interfaces
@@ -11,6 +12,12 @@ namespace Triwinds.Engine.Interfaces
 
         Turn ProcessTurn(Guid battleId);
 
-        bool MovePlayer(Guid battleId, Guid playerId, int row, int column);
+        bool MoveCombatant(Guid battleId, Guid playerId, int row, int column);
+
+        bool EndCombatantTurn(Guid battleId, Guid combatantId);
+
+        List<Guid> GetAttackableTargets(Guid battleId, Guid playerId);
+
+        AttackResult AttackCombatant(Guid battleId, Guid attackerId, Guid defenderId);
     }
 }

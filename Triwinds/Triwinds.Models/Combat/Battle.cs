@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Triwinds.Models.Combat;
 
 namespace Triwinds.Models.Combat
 {
@@ -44,6 +43,40 @@ namespace Triwinds.Models.Combat
 
                 Combatants.Enqueue(combatant);
             }
+        }
+
+        public bool EndTurn(Guid playerId)
+        {
+            Combatant currentCombatant = Combatants.Peek();
+
+            // Make sure the right player is ending their turn
+            if (currentCombatant.Id != playerId)
+            {
+                return false;
+            }
+
+            // Remove the combatant from the queue.
+            Combatant combatant = Combatants.Dequeue();
+
+            // Prepare their next turn
+            combatant.TurnStartLocation = combatant.CurrentLocation;
+            GetMovableLocations(combatant);
+
+            // Add them to the end of the turn order
+            Combatants.Enqueue(combatant);
+
+            // Remove any dead combatants
+            Combatants = new Queue<Combatant>(Combatants.Where(c => c.HitPoints > 0));
+
+            return true;
+        }
+
+        public int GetDistance(Location location1, Location location2)
+        {
+            int rowDifference = Math.Abs(location1.Row - location2.Row);
+            int columnDifference = Math.Abs(location1.Column - location2.Column);
+
+            return rowDifference > columnDifference ? rowDifference : columnDifference;
         }
 
         private void GetMovableLocations(Combatant combatant)

@@ -8,10 +8,41 @@ function ProcessNextTurn() {
     $.getJSON("/Combat/ProcessTurn", { battleId: id }, function (data) {
         $("#CurrentCombatant").val(JSON.stringify(data.currentCombatant));
 
-        if (data.battleState == 0) { // Players turn
+        if (data.battleState == 0) { // Player's turn
             $('#combatMenu').modal('show');
         }
+        if (data.battleState == 1) { // AI's turn
+            PlayBackAITurnActions(data);
+        }
+        if (data.battleState == 2) { // Win
+            $("#EndBattleMessage").text("Congragulations You Win!");
+            $('#endBattleModal').modal('show');
+        }
+        if (data.battleState == 3) { // Loss
+            $("#EndBattleMessage").text("You are dead.  Better luck next time.");
+            $('#endBattleModal').modal('show');
+        }
     });
+}
+
+function PlayBackAITurnActions(data) {
+    $('#' + data.currentCombatant.id).appendTo($('#' + data.moveTo)).animate({}, 1000);
+
+    if (data.attacted == true) {
+        var currentHp = $("#" + data.attackedCombatantId + "HP").text();
+        var newHp = currentHp - data.damage;
+        $("#" + data.attackedCombatantId + "HP").text(newHp);
+
+        $("#" + data.attackedCombatantId).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+
+        if (newHp <= 0) {
+            $("#" + data.attackedCombatantId).fadeOut(50);
+        }
+    }
+
+    setTimeout(function () {
+        ProcessNextTurn();
+    }, 750);
 }
 
 function ShowMoveableSquares() {
@@ -47,4 +78,53 @@ function MovePlayer(squareId) {
     });
 
     $('#combatMenu').modal('show');
+}
+
+function Attack() {
+    var id = $('#CombatId').val();
+    var currentCombatant = JSON.parse($("#CurrentCombatant").val());
+
+    $.getJSON("/Combat/GetAttackableTargets", { battleId: id, playerId: currentCombatant.id }, function (data) {
+        if (data.length == 0) {
+            alert("No valid targets");
+
+            setTimeout(function () {
+                ProcessNextTurn();
+            }, 200);
+        }
+        else if (data.length == 1) { // If there is only one possible target make the attack
+            AttackCombatant(id, currentCombatant.id, data[0]);
+        }
+    });
+}
+
+function EndPlayerTurn() {
+    var id = $('#CombatId').val();
+    var currentCombatant = JSON.parse($("#CurrentCombatant").val());
+
+    $.post("/Combat/EndPlayerTurn", { battleId: id, playerId: currentCombatant.id }, function (data) {
+        ProcessNextTurn();
+    });
+}
+
+function AttackCombatant(battleId, attackerId, defenderId) {
+    $.post("/Combat/AttackCombatant", { battleId: battleId, attackerId: attackerId, defenderId: defenderId }, function (data) {
+
+        if (data.attackHit == true) {
+            var currentHp = $("#" + defenderId + "HP").text();
+            var newHp = currentHp - data.damage;
+            $("#" + defenderId + "HP").text(newHp);
+
+            $("#" + defenderId).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+
+            if (newHp <= 0) {
+                $("#" + defenderId).fadeOut(50);
+            }
+        }
+
+        setTimeout(function () {
+            // Performing an action ends the players turn
+            EndPlayerTurn();
+        }, 750);        
+    });
 }

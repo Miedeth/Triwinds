@@ -60,11 +60,34 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ShowMoveableSquares()">Move</button>
+                <div class="combatMenuItem">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ShowMoveableSquares()">Move</button>
+                </div>
+                <div class="combatMenuItem">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Attack()">Attack</button>
+                </div>
+                <div class="combatMenuItem">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="EndPlayerTurn()">End Turn</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="endBattleModal" tabindex="-1" role="dialog" aria-labelledby="loadingModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="EndBattleMessage" class="modal-body">
+                Congragulations You Win!
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Return To Character Select", "Index", "Character")
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="DamageDisplay"></div>
 
 <input id="CombatId" type="hidden" value="@Model.Id" />
 <input id="CurrentCombatant" type="hidden" value="" />

@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Triwinds.Data\Triwinds.Data.csproj" />
     <ProjectReference Include="..\Triwinds.Models\Triwinds.Models.csproj" />
   </ItemGroup>
